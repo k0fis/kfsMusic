@@ -10,7 +10,6 @@ spring:
       init:
         platform: sqlite
         mode: always
-        schema-locations: classpath:schema.sql
 
   jpa:
     database-platform: org.hibernate.community.dialect.SQLiteDialect

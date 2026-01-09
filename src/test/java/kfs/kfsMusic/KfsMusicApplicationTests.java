@@ -40,7 +40,7 @@ class KfsMusicApplicationTests {
     @Autowired
     private TrackSearchDao searchDao;
 
-    //@BeforeAll
+    @BeforeEach
     void setup() {
         trackRepository.deleteAll();
         albumRepository.deleteAll();

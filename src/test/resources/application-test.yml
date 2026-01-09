@@ -2,16 +2,14 @@ spring:
   datasource:
     url: jdbc:sqlite:target/test.sqlite
     driver-class-name: org.sqlite.JDBC
-    initialization-mode: always
-    sql:
-      init:
-        platform: sqlite
-        mode: always
-        schema-locations: classpath:/schema.sql
-        data-locations: classpath:/data.sql
 
   jpa:
     database-platform: org.hibernate.community.dialect.SQLiteDialect
     hibernate:
       ddl-auto: none
     show-sql: true
+  sql:
+    init:
+      mode: always
+      platform: sqlite
+

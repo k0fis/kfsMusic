@@ -16,8 +16,36 @@ public class DatabaseInitRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        if (true)
-            return;
+        jdbc.execute("""
+            CREATE TABLE IF NOT EXISTS artist (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL UNIQUE
+            );
+        """);
+
+        jdbc.execute("""
+            CREATE TABLE IF NOT EXISTS  album (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                title TEXT NOT NULL,
+                year INTEGER,
+                artist_id INTEGER NOT NULL,
+                FOREIGN KEY(artist_id) REFERENCES artist(id)
+            );
+        """);
+
+        jdbc.execute("""
+            CREATE TABLE IF NOT EXISTS  track (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                title TEXT NOT NULL,
+                path TEXT NOT NULL UNIQUE,
+                note TEXT,
+                track_no INTEGER,
+                genre TEXT,
+                duration INTEGER,
+                album_id INTEGER NOT NULL,
+                FOREIGN KEY(album_id) REFERENCES album(id)
+            );
+        """);
 
         // FTS5 tabulka
         jdbc.execute("""
