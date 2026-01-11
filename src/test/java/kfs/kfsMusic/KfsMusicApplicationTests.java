@@ -1,6 +1,5 @@
 package kfs.kfsMusic;
 
-import jakarta.transaction.Transactional;
 import kfs.kfsMusic.dto.TrackSearchResult;
 import kfs.kfsMusic.entity.Album;
 import kfs.kfsMusic.entity.Artist;
@@ -8,21 +7,22 @@ import kfs.kfsMusic.entity.Track;
 import kfs.kfsMusic.repo.AlbumRepository;
 import kfs.kfsMusic.repo.ArtistRepository;
 import kfs.kfsMusic.repo.TrackRepository;
-import kfs.kfsMusic.repo.TrackSearchDao;
+import kfs.kfsMusic.repo.impl.TrackSearchDaoSqlite;
 import kfs.kfsMusic.utils.FtsQueryNormalizer;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Slf4j
 @SpringBootTest
-@ActiveProfiles("test")
+@ActiveProfiles({"test", "sqlite"})
 class KfsMusicApplicationTests {
 
     @Autowired
@@ -38,7 +38,7 @@ class KfsMusicApplicationTests {
     private AlbumRepository albumRepository;
 
     @Autowired
-    private TrackSearchDao searchDao;
+    private TrackSearchDaoSqlite searchDao;
 
     @BeforeEach
     void setup() {
@@ -70,7 +70,9 @@ class KfsMusicApplicationTests {
                 searchDao.search(FtsQueryNormalizer.normalize("paranoid"), 10);
 
         assertThat(results).hasSize(1);
-        assertThat(results.get(0).title()).isEqualTo("Paranoid Android");
+        assertThat(results.get(0).track().getTitle()).isEqualTo("Paranoid Android");
+
+        log.info("Value \n{}\n", results.get(0));
     }
 
     @Test
@@ -80,6 +82,8 @@ class KfsMusicApplicationTests {
                 searchDao.search(FtsQueryNormalizer.normalize(userQuery), 10);
 
         assertThat(results).hasSize(1);
+        log.info("Value \n{}\n", results.get(0));
+
     }
 
     @Test

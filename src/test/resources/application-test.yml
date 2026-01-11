@@ -1,15 +1,7 @@
 spring:
   datasource:
     url: jdbc:sqlite:target/test.sqlite
-    driver-class-name: org.sqlite.JDBC
-
-  jpa:
-    database-platform: org.hibernate.community.dialect.SQLiteDialect
-    hibernate:
-      ddl-auto: none
-    show-sql: true
-  sql:
-    init:
-      mode: always
-      platform: sqlite
-
+logging:
+  level:
+    root: INFO
+    kfs.kfsMusic.init.DatabaseInitRunner: DEBUG

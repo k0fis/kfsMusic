@@ -3,7 +3,7 @@ package kfs.kfsMusic.service;
 import kfs.kfsMusic.dto.TrackSearchResult;
 import kfs.kfsMusic.entity.Track;
 import kfs.kfsMusic.repo.TrackRepository;
-import kfs.kfsMusic.repo.TrackSearchDao;
+import kfs.kfsMusic.repo.impl.TrackSearchDaoSqlite;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,11 +12,11 @@ import java.util.List;
 public class TrackService {
 
     private final TrackRepository trackRepository;
-    private final TrackSearchDao searchDao;
+    private final TrackSearchDaoSqlite searchDao;
 
     public TrackService(
             TrackRepository trackRepository,
-            TrackSearchDao searchDao
+            TrackSearchDaoSqlite searchDao
     ) {
         this.trackRepository = trackRepository;
         this.searchDao = searchDao;

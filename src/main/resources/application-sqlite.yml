@@ -1,0 +1,17 @@
+  datasource:
+    url: jdbc:sqlite:./kfsMusic.sqlite
+    driver-class-name: org.sqlite.JDBC
+    initialization-mode: always
+    sql:
+      init:
+        platform: sqlite
+        mode: always
+
+  jpa:
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
